@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
 import { Header } from '../../components';
-import { SET_GRID, SET_THEME, SET_VISUALIZER } from '../../redux/actions';
+import { SET_GRID, SET_THEME, SET_VIEW, SET_VISUALIZER } from '../../redux/actions';
 import './styles.css';
 
 /**for debug */
@@ -46,6 +46,7 @@ const Menu = ({ show, onClose }: MenuProps) => {
       key: 'sdebug',
       name: 'sdebug tryout',
       onClick: () => {
+        dispatch(SET_VIEW('map'));
         sdebug.fire({
           title: <p>sdebug</p>
         });

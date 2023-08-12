@@ -4,7 +4,10 @@ import { FaChevronLeft } from 'react-icons/fa';
 /**map */
 import { useGeolocated } from "react-geolocated";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import L from "leaflet";
 import 'leaflet/dist/leaflet.css';
+import localForage from 'localforage';
+import calculateDistance from 'gps-distance';//Vlad Ganshin@https://stackoverflow.com/questions/42964013/adding-declarations-file-manually-typescript
 
 import { Header, Empty } from '../components';
 import { useResize } from '../hooks';
@@ -22,6 +25,48 @@ import AudioSession from '../services/audio-session';
 import { Track, Menu, Home, NowPlaying, Playlist } from '../views';
 import { setTheme } from '../utils';
 import './styles.css';
+
+/**map */
+interface LocationObj_withTimestamp {
+  coords: GeolocationCoordinates; timestamp: Date;
+}
+var gps_prv: LocationObj_withTimestamp;
+var km = 0.0;
+const storeLocationData = async (coords: GeolocationCoordinates | undefined) => {
+  if (coords === undefined) {
+    console.log("GPS no good :: [index.tsx] coords is undefined !");
+  } else {
+    const timestamp = new Date();
+    try {
+      const data = await localForage.getItem<LocationObj_withTimestamp[]>('locationData');
+      const locationData = data || [];
+      const { latitude, longitude, altitude, heading, speed, accuracy, altitudeAccuracy } = coords;
+      const locationObj = { latitude, longitude, altitude, heading, speed, accuracy, altitudeAccuracy };
+      locationData.push({
+        coords: locationObj,
+        timestamp,
+      });
+      await localForage.setItem('locationData', locationData);
+    } catch (error) {
+      console.error('Error storing location data:', error);
+    }
+
+    const { latitude, longitude, altitude, heading, speed, accuracy, altitudeAccuracy } = coords;
+    km += gps_prv
+      ? calculateDistance(
+        gps_prv.coords.latitude,
+        gps_prv.coords.longitude,
+        latitude,
+        longitude
+      )
+      : 0;
+    const locationObj = { latitude, longitude, altitude, heading, speed, accuracy, altitudeAccuracy };
+    gps_prv = {
+      coords: locationObj,
+      timestamp: new Date(),
+    };
+  }
+};
 
 function App() {
   const prevPlayState = useRef({ playing: false, index: -1 });
@@ -222,48 +267,59 @@ function App() {
   };
 
   /**map */
-  const { coords , isGeolocationAvailable, isGeolocationEnabled } =
-  useGeolocated({
+  const customIcon = L.icon({
+    iconUrl: `${process.env.PUBLIC_URL}/logo192.png`,
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    tooltipAnchor: [16, -28],
+    shadowUrl: `${process.env.PUBLIC_URL}/logo192.png`,
+    shadowSize: [41, 41],
+    shadowAnchor: [12, 41],
+  });
+  const { coords, isGeolocationAvailable, isGeolocationEnabled } =
+    useGeolocated({
       positionOptions: {
-          enableHighAccuracy: true,
-          maximumAge: 0,
-          timeout: Infinity,
+        enableHighAccuracy: true,
+        maximumAge: 0,
+        timeout: Infinity,
       },
       userDecisionTimeout: 5000,
       watchPosition: true,
       suppressLocationOnMount: false,
       isOptimisticGeolocationEnabled: true,
-  });
+    });
+  storeLocationData(coords);
 
   return (
     <div ref={ref} className="app__wrapper">
       <div className="app__container">
-      {
-  view === 'map' ? (
-    <Header
-      title="map"
-      onRightIconClick={() => addSongs()}
-      onLeftIconClick={() => setShowMenu(!showMenu)}
-    />
-  ) : view === 'home' ? (
-    <Header
-      title="playlist"
-      onRightIconClick={() => addSongs()}
-      onLeftIconClick={() => setShowMenu(!showMenu)}
-    />
-  ) : (
-    <Header
-      title="Track"
-      rightIcon={null}
-      leftIcon={
-        <div style={{ transform: 'translateX(-2px)' }}>
-          <FaChevronLeft size={24} />
-        </div>
-      }
-      onLeftIconClick={() => dispatch(SET_VIEW('home'))}
-    />
-  )
-}
+        {
+          view === 'map' ? (
+            <Header
+              title="map"
+              onRightIconClick={() => addSongs()}
+              onLeftIconClick={() => setShowMenu(!showMenu)}
+            />
+          ) : view === 'home' ? (
+            <Header
+              title="playlist"
+              onRightIconClick={() => addSongs()}
+              onLeftIconClick={() => setShowMenu(!showMenu)}
+            />
+          ) : (
+            <Header
+              title="Track"
+              rightIcon={null}
+              leftIcon={
+                <div style={{ transform: 'translateX(-2px)' }}>
+                  <FaChevronLeft size={24} />
+                </div>
+              }
+              onLeftIconClick={() => dispatch(SET_VIEW('home'))}
+            />
+          )
+        }
 
         <Menu show={showMenu} onClose={() => setShowMenu(false)} />
 
@@ -315,17 +371,23 @@ function App() {
             onChange={(v: number) => timeDrag(v)}
           />
         )}
-        {view === 'map' && isGeolocationAvailable===true && isGeolocationEnabled===true && (<MapContainer style={{ width: "100vw", height: "100vh" }} center={[(coords)?coords.latitude:0.0, (coords)?coords.longitude:0.0]} zoom={13} scrollWheelZoom={false}>
-                    <TileLayer
-                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    />
-                    <Marker position={[(coords)?coords.latitude:0.0, (coords)?coords.longitude:0.0]}>
-                        <Popup>
-                            A pretty CSS3 popup. <br /> Easily customizable.
-                        </Popup>
-                    </Marker>
-                </MapContainer>)}
+        {view === 'map' &&( isGeolocationAvailable === false ? (
+          <h2>Your browser does not support Geolocation</h2>
+        ) : isGeolocationEnabled === false ? (
+          <h2>Geolocation is not enabled</h2>
+        ) : (//TODO [(coords)?coords.latitude:0.0, (coords)?coords.longitude:0.0] 好麻煩喔
+          <MapContainer style={{ width: "100vw", height: "100vh" }} center={[(coords) ? coords.latitude : 0.0, (coords) ? coords.longitude : 0.0]} zoom={13} scrollWheelZoom={false}>
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <Marker position={[(coords) ? coords.latitude : 0.0, (coords) ? coords.longitude : 0.0]} icon={customIcon}>
+              <Popup>
+                km <br /> {km}
+              </Popup>
+            </Marker>
+          </MapContainer>
+        ))}
 
         <div className="app__content">
           <input

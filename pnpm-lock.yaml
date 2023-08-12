@@ -29,6 +29,9 @@ dependencies:
   '@types/react-dom':
     specifier: ^18.2.7
     version: 18.2.7
+  gps-distance:
+    specifier: ^0.0.4
+    version: 0.0.4
   jsmediatags:
     specifier: ^3.9.7
     version: 3.9.7
@@ -5617,6 +5620,11 @@ packages:
     resolution: {integrity: sha512-d65bNlIadxvpb/A2abVdlqKqV563juRnZ1Wtk6s1sIR8uNsXR70xqIzVqxVf1eTqDunwT2MkczEeaezCKTZhwA==}
     dependencies:
       get-intrinsic: 1.2.1
+    dev: false
+
+  /gps-distance@0.0.4:
+    resolution: {integrity: sha512-A0Y86IZW5xlozayFdF/trgWir9h3b4cU4e36llhTKzp2uDCxdZijA4ZXSYElfTdYd7fSImWVgIR3Zf0b6adrvg==}
+    engines: {node: '>= 0.10.x', npm: '>= 1.2.x'}
     dev: false
 
   /graceful-fs@4.2.11:
