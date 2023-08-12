@@ -72,7 +72,7 @@ export default class AudioSession {
 
         Navigator.mediaSession.setActionHandler('stop', pause);
       }
-    } catch (error: any) {//TODO error now using any type
+    } catch (error: any) {//TODO error now using any type (answer of ford04@https://stackoverflow.com/questions/54649465/how-to-do-try-catch-and-finally-statements-in-typescript)
       console.error(error.message);
     }
   };

@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from "react-dom/client";
 
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
@@ -13,6 +13,9 @@ import { reducers } from './redux';
 import DataStore from './services/data-store';
 
 const WINDOW = window as any;
+
+const ele = document.getElementById("root") as Element;
+const root = ReactDOM.createRoot(ele);
 
 (async () => {
   try {
@@ -36,13 +39,12 @@ const WINDOW = window as any;
       });
     });
 
-    ReactDOM.render(
+    root.render(
       <React.StrictMode>
         <Provider store={store}>
           <App />
         </Provider>
-      </React.StrictMode>,
-      document.getElementById('root'),
+      </React.StrictMode>
     );
   } catch (error) {}
 })();
