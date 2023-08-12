@@ -42,7 +42,7 @@ const Menu = ({ show, onClose }: MenuProps) => {
       onClick: () => dispatch(SET_THEME(!settings.light)),
     },
     {
-      id: 4,
+      id: 4,//TODO remove this if debug don't need
       key: 'sdebug',
       name: 'sdebug tryout',
       onClick: () => {
