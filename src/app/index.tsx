@@ -37,7 +37,7 @@ const storeLocationData = async (coords: GeolocationCoordinates | undefined,
   pauseSong_local: Function, resumeSong_local: Function, dispatch_local: Function
 ) => {
   if (coords === undefined) {
-    console.log("GPS no good :: [index.tsx] coords is undefined !");
+    console.log("[index.tsx] Getting the location data&hellip;");
   } else {
     const timestamp = new Date();
     try {
