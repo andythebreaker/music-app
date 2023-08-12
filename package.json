@@ -47,7 +47,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "autotest": "node autotest/test.js"
   },
   "eslintConfig": {
     "extends": [
@@ -71,6 +72,7 @@
     "@types/jsmediatags": "^3.9.3",
     "@types/localforage": "^0.0.34",
     "gh-pages": "^6.0.0",
+    "puppeteer": "^21.0.3",
     "typescript": "^4.9.5"
   },
   "bugs": {
