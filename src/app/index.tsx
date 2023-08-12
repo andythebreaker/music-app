@@ -32,7 +32,10 @@ interface LocationObj_withTimestamp {
 }
 var gps_prv: LocationObj_withTimestamp;
 var km = 0.0;
-const storeLocationData = async (coords: GeolocationCoordinates | undefined) => {
+const storeLocationData = async (coords: GeolocationCoordinates | undefined,
+  playState_local: { index: number; playing: any; } | undefined,
+  pauseSong_local: Function, resumeSong_local: Function, dispatch_local: Function
+) => {
   if (coords === undefined) {
     console.log("GPS no good :: [index.tsx] coords is undefined !");
   } else {
@@ -60,6 +63,13 @@ const storeLocationData = async (coords: GeolocationCoordinates | undefined) => 
         longitude
       )
       : 0;
+    if (km > 10.0 && playState_local !== undefined) {
+      1 === playState_local.index
+        ? playState_local.playing
+          ? pauseSong_local()
+          : resumeSong_local()
+        : dispatch_local(PLAY_SONG(1));
+    }
     const locationObj = { latitude, longitude, altitude, heading, speed, accuracy, altitudeAccuracy };
     gps_prv = {
       coords: locationObj,
@@ -289,7 +299,7 @@ function App() {
       suppressLocationOnMount: false,
       isOptimisticGeolocationEnabled: true,
     });
-  storeLocationData(coords);
+  storeLocationData(coords,playState,pauseSong,resumeSong,dispatch);
 
   return (
     <div ref={ref} className="app__wrapper">
@@ -371,7 +381,7 @@ function App() {
             onChange={(v: number) => timeDrag(v)}
           />
         )}
-        {view === 'map' &&( isGeolocationAvailable === false ? (
+        {view === 'map' && (isGeolocationAvailable === false ? (
           <h2>Your browser does not support Geolocation</h2>
         ) : isGeolocationEnabled === false ? (
           <h2>Geolocation is not enabled</h2>

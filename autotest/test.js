@@ -27,7 +27,7 @@ async function runTest() {
     });
 
     // Generate and set 48 random GPS locations
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 148; i++) {
       const latitude = Math.random() * (90 - (-90)) + (-90);
       const longitude = Math.random() * (180 - (-180)) + (-180);
       await page.setGeolocation({ latitude, longitude });
