@@ -1,6 +1,10 @@
 import { useCallback, useEffect, useRef, useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FaChevronLeft } from 'react-icons/fa';
+/**map */
+import { useGeolocated } from "react-geolocated";
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
 
 import { Header, Empty } from '../components';
 import { useResize } from '../hooks';
@@ -217,27 +221,50 @@ function App() {
     }
   };
 
+  /**map */
+  const { coords , isGeolocationAvailable, isGeolocationEnabled } =
+  useGeolocated({
+      positionOptions: {
+          enableHighAccuracy: true,
+          maximumAge: 0,
+          timeout: Infinity,
+      },
+      userDecisionTimeout: 5000,
+      watchPosition: true,
+      suppressLocationOnMount: false,
+      isOptimisticGeolocationEnabled: true,
+  });
+
   return (
     <div ref={ref} className="app__wrapper">
       <div className="app__container">
-        {view === 'home' ? (
-          <Header
-            title="playlist"
-            onRightIconClick={() => addSongs()}
-            onLeftIconClick={() => setShowMenu(!showMenu)}
-          />
-        ) : (
-          <Header
-            title="Track"
-            rightIcon={null}
-            leftIcon={
-              <div style={{ transform: 'translateX(-2px)' }}>
-                <FaChevronLeft size={24} />
-              </div>
-            }
-            onLeftIconClick={() => dispatch(SET_VIEW('home'))}
-          />
-        )}
+      {
+  view === 'map' ? (
+    <Header
+      title="map"
+      onRightIconClick={() => addSongs()}
+      onLeftIconClick={() => setShowMenu(!showMenu)}
+    />
+  ) : view === 'home' ? (
+    <Header
+      title="playlist"
+      onRightIconClick={() => addSongs()}
+      onLeftIconClick={() => setShowMenu(!showMenu)}
+    />
+  ) : (
+    <Header
+      title="Track"
+      rightIcon={null}
+      leftIcon={
+        <div style={{ transform: 'translateX(-2px)' }}>
+          <FaChevronLeft size={24} />
+        </div>
+      }
+      onLeftIconClick={() => dispatch(SET_VIEW('home'))}
+    />
+  )
+}
+
         <Menu show={showMenu} onClose={() => setShowMenu(false)} />
 
         {view === 'home' && (
@@ -288,6 +315,17 @@ function App() {
             onChange={(v: number) => timeDrag(v)}
           />
         )}
+        {view === 'map' && isGeolocationAvailable===true && isGeolocationEnabled===true && (<MapContainer style={{ width: "100vw", height: "100vh" }} center={[(coords)?coords.latitude:0.0, (coords)?coords.longitude:0.0]} zoom={13} scrollWheelZoom={false}>
+                    <TileLayer
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
+                    <Marker position={[(coords)?coords.latitude:0.0, (coords)?coords.longitude:0.0]}>
+                        <Popup>
+                            A pretty CSS3 popup. <br /> Easily customizable.
+                        </Popup>
+                    </Marker>
+                </MapContainer>)}
 
         <div className="app__content">
           <input
