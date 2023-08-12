@@ -50,6 +50,12 @@ dependencies:
   redux:
     specifier: ^4.2.1
     version: 4.2.1
+  sweetalert2:
+    specifier: ^11.7.22
+    version: 11.7.22
+  sweetalert2-react-content:
+    specifier: ^5.0.7
+    version: 5.0.7(react-dom@18.2.0)(react@18.2.0)(sweetalert2@11.7.22)
   web-vitals:
     specifier: ^3.4.0
     version: 3.4.0
@@ -9653,6 +9659,22 @@ packages:
       csso: 4.2.0
       picocolors: 1.0.0
       stable: 0.1.8
+    dev: false
+
+  /sweetalert2-react-content@5.0.7(react-dom@18.2.0)(react@18.2.0)(sweetalert2@11.7.22):
+    resolution: {integrity: sha512-8Fk82Mpk45lFXpJWKIFF/lq8k/dJKDDQGFcuqVosaL/qRdViyAs5+u37LoTGfnOIvf+rfQB3PAXcp1XLLn+0ew==}
+    peerDependencies:
+      react: ^18.0.0
+      react-dom: ^18.0.0
+      sweetalert2: ^11.0.0
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      sweetalert2: 11.7.22
+    dev: false
+
+  /sweetalert2@11.7.22:
+    resolution: {integrity: sha512-Xu5now8VnxBKtdnoQw562zXldCOJ/pNsFHTcmSGgJHH+702Bulh4Ps00/js9HqFv00mZ6Hf1wm4BXxqssWyREg==}
     dev: false
 
   /symbol-tree@3.2.4:

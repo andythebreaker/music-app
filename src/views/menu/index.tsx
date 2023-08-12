@@ -1,10 +1,16 @@
 import { FaPlus } from 'react-icons/fa';
 import { MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
+/**for debug */
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 import { Header } from '../../components';
 import { SET_GRID, SET_THEME, SET_VISUALIZER } from '../../redux/actions';
 import './styles.css';
+
+/**for debug */
+const sdebug = withReactContent(Swal);
 
 type MenuProps = {
   show: boolean;
@@ -34,6 +40,16 @@ const Menu = ({ show, onClose }: MenuProps) => {
       key: 'light',
       name: 'Light theme',
       onClick: () => dispatch(SET_THEME(!settings.light)),
+    },
+    {
+      id: 4,
+      key: 'sdebug',
+      name: 'sdebug tryout',
+      onClick: () => {
+        sdebug.fire({
+          title: <p>sdebug</p>
+        });
+      }
     },
   ];
 
