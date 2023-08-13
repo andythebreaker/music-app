@@ -53,3 +53,15 @@ export const songTitle = (song: any) => {
 export const getTime = (time: number) => {
   return time ? new Date(time * 1000).toISOString().substr(14, 5) : '';
 };
+
+export function hexStringToUint8Array(hexString: string): Uint8Array {//TODO TO util
+  const length = hexString.length;
+  const uint8Array = new Uint8Array(length / 2);
+
+  for (let i = 0; i < length; i += 2) {
+    const byteValue = parseInt(hexString.substr(i, 2), 16);
+    uint8Array[i / 2] = byteValue;
+  }
+
+  return uint8Array;
+}

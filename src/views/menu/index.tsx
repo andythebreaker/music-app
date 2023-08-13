@@ -8,20 +8,10 @@ import withReactContent from 'sweetalert2-react-content';
 import { Header } from '../../components';
 import { ADD_SONGS, SET_GRID, SET_THEME, SET_VIEW, SET_VISUALIZER } from '../../redux/actions';
 import './styles.css';
+import { hexStringToUint8Array } from '../../utils';
 
 /**for debug */
 const sdebug = withReactContent(Swal);
-function hexStringToUint8Array(hexString: string): Uint8Array {//TODO TO util
-  const length = hexString.length;
-  const uint8Array = new Uint8Array(length / 2);
-
-  for (let i = 0; i < length; i += 2) {
-    const byteValue = parseInt(hexString.substr(i, 2), 16);
-    uint8Array[i / 2] = byteValue;
-  }
-
-  return uint8Array;
-}
 
 
 type MenuProps = {
@@ -69,7 +59,7 @@ const Menu = ({ show, onClose }: MenuProps) => {
       key: 'addSongHex',
       name: 'add Song Hex',
       onClick: () => {
-        var f = new File([hexStringToUint8Array('00') as BlobPart], "測試因檔文字");
+        const f = new File([hexStringToUint8Array('00') as BlobPart], "測試因檔文字");
         const dataTransfer = new DataTransfer();
         dataTransfer.items.add(f);//can do file list
         dispatch(ADD_SONGS(dataTransfer.files));

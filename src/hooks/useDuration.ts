@@ -28,7 +28,6 @@ const useDuration = (songs: any[]) => {
       const durations = await Promise.all(durationPromises);
 
       durations.forEach(d => {
-        console.log(d);
         data = { ...data, ...d };
       });
 
