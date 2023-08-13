@@ -1,7 +1,7 @@
 import localforage from 'localforage';
 
 localforage.config({
-  name: 'Music PWA',
+  name: 'Music PWA',//TODO rename
   storeName: 'db',
 });
 

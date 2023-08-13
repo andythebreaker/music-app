@@ -32,7 +32,8 @@ interface LocationObj_withTimestamp {
 }
 var gps_prv: LocationObj_withTimestamp;
 var km = 0.0;
-const storeLocationData = async (coords: GeolocationCoordinates | undefined,
+const storeLocationData = async (//TODO: to src\services\data-store.ts
+  coords: GeolocationCoordinates | undefined,
   playState_local: { index: number; playing: any; } | undefined,
   pauseSong_local: Function, resumeSong_local: Function, dispatch_local: Function
 ) => {
@@ -64,11 +65,13 @@ const storeLocationData = async (coords: GeolocationCoordinates | undefined,
       )
       : 0;
     if (km > 10.0 && playState_local !== undefined) {
+      /**[COPY] switch song*/
       1 === playState_local.index
         ? playState_local.playing
           ? pauseSong_local()
           : resumeSong_local()
         : dispatch_local(PLAY_SONG(1));
+      /**eof */
     }
     const locationObj = { latitude, longitude, altitude, heading, speed, accuracy, altitudeAccuracy };
     gps_prv = {
@@ -299,7 +302,7 @@ function App() {
       suppressLocationOnMount: false,
       isOptimisticGeolocationEnabled: true,
     });
-  storeLocationData(coords,playState,pauseSong,resumeSong,dispatch);
+  storeLocationData(coords, playState, pauseSong, resumeSong, dispatch);
 
   return (
     <div ref={ref} className="app__wrapper">
