@@ -1,0 +1,18 @@
+{
+    "code": 0,
+    "data": {
+        "converter": "Pinyin",
+        "text": "da2 cheng2 mu4 biao1 shi2 gong1 li3",
+        "diff": null,
+        "textFormat": "PlainText",
+        "usedModules": [],
+        "jpTextStyles": []
+    },
+    "msg": "",
+    "revisions": {
+        "build": "dict-9ba26180-r1038",
+        "msg": "fix: 例行性修正字詞 20230811",
+        "time": 1691928071
+    },
+    "execTime": 0.015
+}
