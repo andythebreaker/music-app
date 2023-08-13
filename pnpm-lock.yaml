@@ -118,6 +118,9 @@ devDependencies:
   '@types/localforage':
     specifier: ^0.0.34
     version: 0.0.34
+  babel-plugin-preval:
+    specifier: ^5.1.0
+    version: 5.1.0
   customize-cra:
     specifier: ^1.0.0
     version: 1.0.0
@@ -3213,6 +3216,16 @@ packages:
       '@babel/helper-define-polyfill-provider': 0.4.2(@babel/core@7.22.10)
     transitivePeerDependencies:
       - supports-color
+
+  /babel-plugin-preval@5.1.0:
+    resolution: {integrity: sha512-G5R+xmo5LS41A4UyZjOjV0mp9AvkuCyUOAJ6TOv/jTZS+VKh7L7HUDRcCSOb0YCM/u0fFarh7Diz0wjY8rFNFg==}
+    engines: {node: '>=10', npm: '>=6'}
+    dependencies:
+      '@babel/runtime': 7.22.10
+      '@types/babel__core': 7.20.1
+      babel-plugin-macros: 3.1.0
+      require-from-string: 2.0.2
+    dev: true
 
   /babel-plugin-transform-react-remove-prop-types@0.4.24:
     resolution: {integrity: sha512-eqj0hVcJUR57/Ug2zE1Yswsw4LhuqqHhD+8v120T1cl3kjg76QwtyBrdIk4WVwK+lAhBJVYCd/v+4nc4y+8JsA==}

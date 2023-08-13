@@ -71,6 +71,7 @@
   "devDependencies": {
     "@types/jsmediatags": "^3.9.3",
     "@types/localforage": "^0.0.34",
+    "babel-plugin-preval": "^5.1.0",
     "customize-cra": "^1.0.0",
     "gh-pages": "^6.0.0",
     "puppeteer": "^21.0.3",
