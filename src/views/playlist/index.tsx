@@ -26,7 +26,7 @@ const Playlist = ({
   const duration = useDuration(songs);
 
   const getDuration = (name: string) => {
-    return duration[name] ? getTime(duration[name]) : '';
+    return duration[name] ? getTime(duration[name]) : '';//TODO 新增音檔未到提示字
   };
 
   const isSelected = (name: string) => {

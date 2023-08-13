@@ -7,23 +7,28 @@ const useDuration = (songs: any[]) => {
     (async () => {
       let data: any = {};
       const durationPromises = songs.map(song => {
-        const audio = document.createElement('audio');
-        audio.src = URL.createObjectURL(song);
+        if (song.size <= 1) {//TODO check if is ok mp3 file, not just use size
+          return new Promise<any>(resolve => { resolve(-1) });
+        } else {
+          const audio = document.createElement('audio');
+          audio.src = URL.createObjectURL(song);
 
-        return new Promise<any>(resolve => {
-          audio.addEventListener(
-            'loadedmetadata',
-            function () {
-              resolve({ [song.name]: audio.duration });
-            },
-            false,
-          );
-        });
+          return new Promise<any>(resolve => {
+            audio.addEventListener(
+              'loadedmetadata',
+              function () {
+                resolve({ [song.name]: audio.duration });
+              },
+              false,
+            );
+          });
+        }
       });
 
       const durations = await Promise.all(durationPromises);
 
       durations.forEach(d => {
+        console.log(d);
         data = { ...data, ...d };
       });
 
