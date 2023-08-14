@@ -4,27 +4,15 @@ import { useDispatch, useSelector } from 'react-redux';
 /**for debug */
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import preval from 'babel-plugin-preval/macro';
 
 import { Header } from '../../components';
 import { ADD_SONGS, SET_GRID, SET_THEME, SET_VIEW, SET_VISUALIZER } from '../../redux/actions';
 import './styles.css';
 import { hexStringToUint8Array } from '../../utils';
-import {x1} from '../../speech';
+//-import {x1} from '../../speech';
 
 /**for debug */
 const sdebug = withReactContent(Swal);
-/**for speech */
-preval`const fs = require('fs');
-fs.writeFile('./src/speech/index.ts', '/*do not modify this file, created by preval*/export const x1 :string= "x2";'
-, (err) => {
-  if (err) {
-      console.error('Error writing file:', err);
-  } else {
-      console.log('success');
-  }
-});
-`;
 
 type MenuProps = {
   show: boolean;
@@ -71,7 +59,7 @@ const Menu = ({ show, onClose }: MenuProps) => {
       key: 'addSongHex',
       name: 'add Song Hex',
       onClick: () => {
-        const f = new File([hexStringToUint8Array('00') as BlobPart], x1);//, { type: 'audio/mpeg' });
+        const f = new File([hexStringToUint8Array('00') as BlobPart], 'fuck');//, { type: 'audio/mpeg' });
         const dataTransfer = new DataTransfer();
         dataTransfer.items.add(f);//can do file list
         dispatch(ADD_SONGS(dataTransfer.files));

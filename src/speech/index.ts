@@ -1,1 +1,1 @@
-/*do not modify this file, created by preval*/export const x1 :string= "x2";
+/*do not modify this file, created by preval*/const howhow :Function = (words:string)=>{return words;}; export default howhow;
