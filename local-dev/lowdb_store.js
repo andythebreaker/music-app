@@ -23,10 +23,8 @@ function findMp3FilesInDirectory(directory) {
                 } else if (path.extname(file) === '.mp3') {
                     const h512=createHash("sha512");
                     h512.update(path.parse(file).name,'utf8');
-                    // const h513=createHash("sha512");
-                    // h513.update('的同學','utf8');
                     const h512s=h512.digest('hex');
-                    console.log(`${file} @ ${path.basename(path.dirname(filePath))} [${path.parse(file).name}]`);// [${h512.digest('hex')===h513.digest('hex')}]`);
+                    console.log(`${file} @ ${path.basename(path.dirname(filePath))} [${path.parse(file).name}]`);
                     
                 }
             });
