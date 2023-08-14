@@ -79,6 +79,7 @@
     "lodash": "^4.17.21",
     "lowdb": "^6.0.1",
     "make-fetch-happen": "^12.0.0",
+    "minarun-core": "0.0.3",
     "puppeteer": "^21.0.3",
     "react-app-rewired": "^2.2.1",
     "typescript": "^4.9.5"

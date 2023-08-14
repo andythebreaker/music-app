@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from "react-dom/client";
-import preval from 'babel-plugin-preval/macro';
+
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
@@ -70,33 +70,3 @@ reportWebVitals();
 //   }
 // });
 // `;
-preval`const fs = require('fs');
-const path = require('path');
-
-function countTypeScriptFiles(dirPath) {
-  let count = 0;
-
-  function traverseDir(currentPath) {
-    const files = fs.readdirSync(currentPath);
-
-    for (const file of files) {
-      const filePath = path.join(currentPath, file);
-      const stats = fs.statSync(filePath);
-
-      if (stats.isDirectory()) {
-        traverseDir(filePath);
-      } else if (stats.isFile() && (file.endsWith('.ts') || file.endsWith('.tsx'))) {
-        count++;
-      }
-    }
-  }
-
-  traverseDir(dirPath);
-
-  return count;
-}
-
-const srcDir = './src';
-const typeScriptFileCount = countTypeScriptFiles(srcDir);
-console.log(typeScriptFileCount);
-`;

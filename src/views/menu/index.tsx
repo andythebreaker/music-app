@@ -5,11 +5,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
+import preval from 'babel-plugin-preval/macro';
+
 import { Header } from '../../components';
 import { ADD_SONGS, SET_GRID, SET_THEME, SET_VIEW, SET_VISUALIZER } from '../../redux/actions';
 import './styles.css';
 import { hexStringToUint8Array } from '../../utils';
-//-import {x1} from '../../speech';
+import howhow from '../../speech';
 
 /**for debug */
 const sdebug = withReactContent(Swal);
@@ -59,7 +61,7 @@ const Menu = ({ show, onClose }: MenuProps) => {
       key: 'addSongHex',
       name: 'add Song Hex',
       onClick: () => {
-        const f = new File([hexStringToUint8Array('00') as BlobPart], 'fuck');//, { type: 'audio/mpeg' });
+        const f = new File([hexStringToUint8Array('00') as BlobPart], howhow("這是一隻豬"));//, { type: 'audio/mpeg' });
         const dataTransfer = new DataTransfer();
         dataTransfer.items.add(f);//can do file list
         dispatch(ADD_SONGS(dataTransfer.files));
@@ -102,3 +104,72 @@ const Menu = ({ show, onClose }: MenuProps) => {
 };
 
 export default Menu;
+
+preval`const fs = require('fs').promises;
+const path = require('path');
+
+async function countTypeScriptFiles(dirPath) {
+    const have_Provider = [];
+
+    async function traverseDir(currentPath) {
+        const files = await fs.readdir(currentPath);
+
+        for (const file of files) {
+            const filePath = path.join(currentPath, file);
+            const stats = await fs.stat(filePath);
+
+            if (stats.isDirectory()) {
+                await traverseDir(filePath);
+            } else if (stats.isFile() && (file.endsWith('.ts') || file.endsWith('.tsx'))) {
+                const searchString = (Buffer.from('L15pbXBvcnQgKlx7PyAqcHJldmFsICpcfT8gKmZyb20gKltcJ3xcIl1iYWJlbC1wbHVnaW4tcHJldmFsXC9tYWNyb1tcJ3xcIl0gKlw7JC9nbQ==', 'base64')).toString('utf-8');
+
+                try {
+                    const content = await fs.readFile(filePath, 'utf-8');
+                    if (searchString.test(content)) {
+                        have_Provider.push(filePath);
+                    }
+                } catch (err) {
+                    console.error('Error reading the file:', err);
+                }
+            }
+        }
+    }
+
+    await traverseDir(dirPath);
+    console.log(have_Provider);
+
+    const regexPattern = /howhow\( *\"([^\(\)]+)\" *\)/g;
+
+    for (let i = 0; i < have_Provider.length; i++) {
+        const filePath = have_Provider[i];
+        const fullPath = path.resolve(filePath);
+        
+        try {
+            const data = await fs.readFile(fullPath, 'utf8');
+            const matches = [...data.matchAll(regexPattern)];
+
+            if (matches.length > 0) {
+                console.log("Matches in file");
+                matches.forEach(match => {
+                    console.log(match[0]);
+                    console.log(match[1]);
+                });
+            } else {
+                console.log("No matches found");
+            }
+        } catch (err) {
+            console.error('Error reading file:', err);
+        }
+    }
+    return have_Provider;
+}
+
+const srcDir = './src';
+countTypeScriptFiles(srcDir)
+    .then(have_Provider => {
+        console.log('Files with Provider imports:', have_Provider);
+    })
+    .catch(error => {
+        console.error('Error counting TypeScript files:', error);
+    });
+`;

@@ -142,6 +142,9 @@ devDependencies:
   make-fetch-happen:
     specifier: ^12.0.0
     version: 12.0.0
+  minarun-core:
+    specifier: 0.0.3
+    version: 0.0.3
   puppeteer:
     specifier: ^21.0.3
     version: 21.0.3
@@ -6954,6 +6957,10 @@ packages:
     resolution: {integrity: sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg==}
     engines: {node: '>=4'}
     dev: false
+
+  /minarun-core@0.0.3:
+    resolution: {integrity: sha512-AN2dHhtUDggBCZS5UNkhUV6a+xPThhnaEbJCLqJiw1He/JuY1TFQfRaCxzRMtyndluUncC5VUPaEvu91wfOt9Q==}
+    dev: true
 
   /mini-css-extract-plugin@2.7.6(webpack@5.88.2):
     resolution: {integrity: sha512-Qk7HcgaPkGG6eD77mLvZS1nmxlao3j+9PkrT9Uc7HAE1id3F41+DdBRYRYkbyfNRGzm8/YWtzhw7nVPmwhqTQw==}
