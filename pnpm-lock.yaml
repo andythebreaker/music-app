@@ -127,6 +127,9 @@ devDependencies:
   customize-cra:
     specifier: ^1.0.0
     version: 1.0.0
+  esm:
+    specifier: ^3.2.25
+    version: 3.2.25
   gh-pages:
     specifier: ^6.0.0
     version: 6.0.0
@@ -4801,6 +4804,11 @@ packages:
       text-table: 0.2.0
     transitivePeerDependencies:
       - supports-color
+
+  /esm@3.2.25:
+    resolution: {integrity: sha512-U1suiZ2oDVWv4zPO56S0NcR5QriEahGtdN2OR6FiOG4WJvcjBVFB0qI4+eKoWFH483PKGuLuu6V8Z4T5g63UVA==}
+    engines: {node: '>=6'}
+    dev: true
 
   /espree@9.6.1:
     resolution: {integrity: sha512-oruZaFkjorTpF32kDSI5/75ViwGeZginGGy2NoOSg3Q9bnwlnmDm4HLnkl0RE3n+njDXR037aY1+x58Z/zFdwQ==}

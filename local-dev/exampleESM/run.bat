@@ -1,0 +1,1 @@
+node --loader=esm local-dev\exampleESM\main.mjs
