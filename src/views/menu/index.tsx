@@ -61,7 +61,7 @@ const Menu = ({ show, onClose }: MenuProps) => {
       key: 'addSongHex',
       name: 'add Song Hex',
       onClick: () => {
-        const f = new File([hexStringToUint8Array('00') as BlobPart], howhow("這是一隻小豬"));//, { type: 'audio/mpeg' });
+        const f = new File([hexStringToUint8Array('00') as BlobPart], howhow("這是一隻豬"));//, { type: 'audio/mpeg' });
         const dataTransfer = new DataTransfer();
         dataTransfer.items.add(f);//can do file list
         dispatch(ADD_SONGS(dataTransfer.files));
