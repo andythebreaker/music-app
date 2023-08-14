@@ -4,18 +4,13 @@ const fs = require('fs');
 const inputFile = 'tmp.mp3';
 const outputFile = 'output.txt';
 
-// Read the content of the input file
 fs.readFile(inputFile, (err, data) => {
   if (err) {
     console.error('Error reading input file:', err);
     return;
   }
-
-  // Convert the binary data to a hex string
   const hexString = Buffer.from(data).toString('hex');
-
-  // Write the hex string to the output file
-  fs.writeFile(outputFile, hexString, (err) => {
+  fs.writeFile(outputFile, `/*do not modify this file, created by hexString-BOT; audio usage: How How; used: Fanhuaji*/ export const x1 : string= "${hexString}";`, (err) => {
     if (err) {
       console.error('Error writing output file:', err);
       return;
