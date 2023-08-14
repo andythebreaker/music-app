@@ -59,14 +59,3 @@ serviceWorkerRegistration.register();
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
 
-/**for speech */
-// preval`const fs = require('fs');
-// fs.writeFile('./src/speech/index.ts', '/*do not modify this file, created by preval*/export const x1 :string= "x2";'
-// , (err) => {
-//   if (err) {
-//       console.error('Error writing file:', err);
-//   } else {
-//       console.log('success');
-//   }
-// });
-// `;
