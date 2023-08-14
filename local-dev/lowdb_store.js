@@ -27,21 +27,7 @@ function findMp3FilesInDirectory(directory) {
                     // h513.update('的同學','utf8');
                     const h512s=h512.digest('hex');
                     console.log(`${file} @ ${path.basename(path.dirname(filePath))} [${path.parse(file).name}]`);// [${h512.digest('hex')===h513.digest('hex')}]`);
-                    fs.readFile(filePath, (err, data) => {
-                        if (err) {
-                          console.error('Error reading input file:', err);
-                          return;
-                        }
-                        const hexString = Buffer.from(data).toString('hex');
-                        
-                        fs.writeFile(`../src/speech/mp3/${path.basename(path.dirname(filePath))}/${h512s}.ts`, `/*do not modify this file, created by hexString-BOT; audio usage: How How; used: Fanhuaji*/ const SHA512_${h512s} : string= "${hexString}"; export default SHA512_${h512s};`, (err) => {
-                          if (err) {
-                            console.error('Error writing output file:', err);
-                            return;
-                          }
-                          console.log('Binary hex string array saved');
-                        });
-                      });
+                    
                 }
             });
         });
