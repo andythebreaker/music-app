@@ -1,0 +1,7 @@
+#
+file 'local-dev/mp3/2/zhe4.mp3'
+file 'local-dev/mp3/2/shi4.mp3'
+file 'local-dev/mp3/2/yi1.mp3'
+file 'local-dev/mp3/2/zhi1.mp3'
+file 'local-dev/mp3/1/da4.mp3'
+file 'local-dev/mp3/2/zhu1.mp3'
