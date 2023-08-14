@@ -61,7 +61,7 @@ const Menu = ({ show, onClose }: MenuProps) => {
       key: 'addSongHex',
       name: 'add Song Hex',
       onClick: () => {
-        const f = new File([hexStringToUint8Array('00') as BlobPart], howhow("這是一隻豬"));//, { type: 'audio/mpeg' });
+        const f = new File([hexStringToUint8Array('00') as BlobPart], howhow("這是一隻大豬"));//, { type: 'audio/mpeg' });
         const dataTransfer = new DataTransfer();
         dataTransfer.items.add(f);//can do file list
         dispatch(ADD_SONGS(dataTransfer.files));
@@ -121,8 +121,14 @@ async function countTypeScriptFiles(dirPath) {
             if (stats.isDirectory()) {
                 await traverseDir(filePath);
             } else if (stats.isFile() && (file.endsWith('.ts') || file.endsWith('.tsx'))) {
-                const searchString = (Buffer.from('L15pbXBvcnQgKlx7PyAqcHJldmFsICpcfT8gKmZyb20gKltcJ3xcIl1iYWJlbC1wbHVnaW4tcHJldmFsXC9tYWNyb1tcJ3xcIl0gKlw7JC9nbQ==', 'base64')).toString('utf-8');
-
+                const searchString_regex = "import ?\\{? ?preval ?\\}? ?from ?[\\'|\\"]babel-plugin-preval\/macro[\\'|\\"] ?\\;";
+                var regex;
+                try {
+                  regex = new RegExp(searchString_regex);
+                  //console.log('Regex created successfully:', regex);
+                } catch (error) {
+                  console.error('Error creating regex:', error.message);
+                }const searchString=regex;
                 try {
                     const content = await fs.readFile(filePath, 'utf-8');
                     if (searchString.test(content)) {
@@ -138,8 +144,7 @@ async function countTypeScriptFiles(dirPath) {
     await traverseDir(dirPath);
     console.log(have_Provider);
 
-    const regexPattern = /howhow\( *\"([^\(\)]+)\" *\)/g;
-
+    var regexPattern = /howhow\\( ?\\"([^\\(\\)]+)\\" ?\\)/gm;
     for (let i = 0; i < have_Provider.length; i++) {
         const filePath = have_Provider[i];
         const fullPath = path.resolve(filePath);
