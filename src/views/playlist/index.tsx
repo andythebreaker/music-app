@@ -1,5 +1,5 @@
 import './styles.css';
-import { FaPause, FaPlay, FaTrash } from 'react-icons/fa';
+import { FaAd, FaPause, FaPlay, FaTrash } from 'react-icons/fa';
 
 import { useDuration } from '../../hooks';
 import { getTime } from '../../utils';
@@ -42,16 +42,14 @@ const Playlist = ({
 
   return (
     <div
-      className={`playlist ${grid ? 'playlist--grid' : ''} ${
-        index > -1 ? 'playlist--bottom-padded' : ''
-      }`.trim()}
+      className={`playlist ${grid ? 'playlist--grid' : ''} ${index > -1 ? 'playlist--bottom-padded' : ''
+        }`.trim()}
     >
-      {filteredSongs.map(({ name }: any, i: number) => (
+      {filteredSongs.map(({ name, rightIcon }: any, i: number) => (
         <div
           key={i}
-          className={`playlist__item ${
-            isSelected(name) ? 'playlist__item--selected' : ''
-          }`}
+          className={`playlist__item ${isSelected(name) ? 'playlist__item--selected' : ''
+            }`}
         >
           {grid && (
             <>
@@ -84,7 +82,11 @@ const Playlist = ({
             className="playlist__icon playlist__icon--right"
             onClick={() => onDelete && onDelete(getIndex(name))}
           >
-            <FaTrash size={18} />
+            {rightIcon === undefined ? (
+              <FaTrash size={18} />
+            ) : (
+              <FaAd size={18} />
+            )}
           </div>
         </div>
       ))}

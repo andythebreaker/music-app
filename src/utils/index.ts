@@ -65,3 +65,7 @@ export function hexStringToUint8Array(hexString: string): Uint8Array {//TODO TO 
 
   return uint8Array;
 }
+
+export function addDefaultAudio(song_in: Array<any>): Array<any> {
+  return song_in = [song_in.find(s => s.name === '公里') === undefined && { size: 1, name: '公里', rightIcon: 'box', complex: [3, 2, 1] }, ...song_in];
+}

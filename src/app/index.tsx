@@ -11,7 +11,7 @@ import calculateDistance from 'gps-distance';//Vlad Ganshin@https://stackoverflo
 
 import { Header, Empty } from '../components';
 import { useResize } from '../hooks';
-import { hexStringToUint8Array } from '../utils';
+import { hexStringToUint8Array ,  addDefaultAudio } from '../utils';
 
 import {
   ADD_SONGS,
@@ -33,8 +33,8 @@ interface LocationObj_withTimestamp {
 }
 var gps_prv: LocationObj_withTimestamp;
 var km = 0.0;
-const speech_words = new Array<number>();
-speech_words.push(3);speech_words.push(1);speech_words.push(2);//TODO 需要反向
+var speech_words = new Array<number>();
+speech_words.push(3); speech_words.push(1); speech_words.push(2);//TODO 需要反向
 const storeLocationData = async (//TODO: to src\services\data-store.ts
   coords: GeolocationCoordinates | undefined,
   playState_local: { index: number; playing: any; } | undefined,
@@ -75,6 +75,13 @@ const storeLocationData = async (//TODO: to src\services\data-store.ts
           : resumeSong_local()
         : dispatch_local(PLAY_SONG(1));
       /**eof */
+    }else if (km > 1.0 && playState_local !== undefined) {
+      speech_words=[1,3];//1,公里
+      1 === playState_local.index//進度
+        ? playState_local.playing
+          ? pauseSong_local()
+          : resumeSong_local()
+        : dispatch_local(PLAY_SONG(1));
     }
     const locationObj = { latitude, longitude, altitude, heading, speed, accuracy, altitudeAccuracy };
     gps_prv = {
@@ -100,17 +107,23 @@ function App() {
 
   const [range, setRange] = useState(0);
   const [showMenu, setShowMenu] = useState(false);
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState('/');//TODO 從這裡改ui不會變
 
   useMemo(() => setTheme(settings.light), [settings.light]);
 
   const filteredSongs = useCallback(() => {
     if (!searchText) {
-      return songs;
+      return addDefaultAudio(songs);
+    } else if (searchText === '/') {
+      //**copy */
+      const f = new File([hexStringToUint8Array('00') as BlobPart], "這是豬");
+      const f2 = {size:1,name:'dog',rightIcon:'box',complex:[3,2,1]};
+      return [f2,f];
+      //**eof */
     } else {
-      return songs.filter((s: any) =>
+      return addDefaultAudio(songs.filter((s: any) =>
         s.name.toLowerCase().includes(searchText.toLowerCase()),
-      );
+      ));
     }
   }, [searchText, songs]);
 
@@ -270,6 +283,7 @@ function App() {
   };
 
   useEffect(() => {
+    console.log(JSON.stringify(playState));
     if (
       JSON.stringify(prevPlayState.current) !== JSON.stringify(playState) &&
       isSongsThere()
