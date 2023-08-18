@@ -5,6 +5,7 @@ import {
   songReducer,
   settingsReducer,
   playStateReducer,
+  mapReducer,
 } from './reducers';
 
 export const reducers = combineReducers({
@@ -12,6 +13,7 @@ export const reducers = combineReducers({
   songs: songReducer,
   settings: settingsReducer,
   playState: playStateReducer,
+  mapState: mapReducer,
 });
 
 export * from './actions';

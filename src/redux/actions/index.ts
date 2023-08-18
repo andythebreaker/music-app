@@ -9,6 +9,7 @@ import {
   T_SET_REPEAT,
   T_SET_VISUALIZER,
   T_SET_VIEW,
+  T_SET_MAP,
 } from '../types';
 
 export const ADD_SONGS = (songs: any) => ({
@@ -56,5 +57,10 @@ export const SET_REPEAT = (value: string) => ({
 
 export const SET_VIEW = (value: string) => ({
   type: T_SET_VIEW,
+  value,
+});
+
+export const SET_MAP = (value: string) => ({
+  type: T_SET_MAP,
   value,
 });

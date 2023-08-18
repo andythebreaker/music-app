@@ -66,6 +66,36 @@ export function hexStringToUint8Array(hexString: string): Uint8Array {//TODO TO 
   return uint8Array;
 }
 
-export function addDefaultAudio(song_in: Array<any>): Array<any> {
+export function appendDefaultAudio(song_in: Array<any>): Array<any> {
   return song_in = [song_in.find(s => s.name === '公里') === undefined && { size: 1, name: '公里', rightIcon: 'box', complex: [3, 2, 1] }, ...song_in];
+}
+
+export function switch_song(idx: number, playState_local: { index: number; playing: any; }, pauseSong_local: Function, resumeSong_local: Function, dispatch_local: Function, PLAY_SONG_local: Function) {
+  idx === playState_local.index
+    ? playState_local.playing
+      ? pauseSong_local()
+      : resumeSong_local()
+    : dispatch_local(PLAY_SONG_local(idx));
+}
+
+export interface CoordsType {
+  accuracy: number | null;
+  altitude: number | null;
+  altitudeAccuracy: number | null;
+  heading: number | null;
+  latitude: number | null;
+  longitude: number | null;
+  speed: number | null;
+}
+
+export function wrapCoordsType(tmp: any): CoordsType {
+  return {
+    accuracy: tmp.accuracy !== undefined ? tmp.accuracy : null,
+    altitude: tmp.altitude !== undefined ? tmp.altitude : null,
+    altitudeAccuracy: tmp.altitudeAccuracy !== undefined ? tmp.altitudeAccuracy : null,
+    heading: tmp.heading !== undefined ? tmp.heading : null,
+    latitude: tmp.latitude !== undefined ? tmp.latitude : null,
+    longitude: tmp.longitude !== undefined ? tmp.longitude : null,
+    speed: tmp.speed !== undefined ? tmp.speed : null,
+  };
 }

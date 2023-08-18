@@ -11,3 +11,5 @@ export const T_SET_REPEAT = 'SET_REPEAT';
 export const T_SET_VISUALIZER = 'SET_VISUALIZER';
 
 export const T_SET_VIEW = 'SET_VIEW';
+
+export const T_SET_MAP = 'SET_MAP';

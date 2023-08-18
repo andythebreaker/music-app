@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer');
-const url = "http://localhost:3000/";
+const url = "http://127.0.0.1:3000/";
 
 async function runTest() {
   try {
@@ -13,6 +13,7 @@ async function runTest() {
     await context.overridePermissions(url, ['geolocation']);
 
     await page.setViewport({ width: 375, height: 812, isMobile: true });
+    //await page.waitForTimeout(10000);
 
     await page.setGeolocation({
       latitude: Math.random() * (90 - (-90)) + (-90),
@@ -25,13 +26,12 @@ async function runTest() {
     page.on('console', (message) => {
       console.log(`Browser Console Log: ${message.text()}`);
     });
-
     // Generate and set 48 random GPS locations
     for (let i = 0; i < 148; i++) {
       const latitude = Math.random() * (90 - (-90)) + (-90);
       const longitude = Math.random() * (180 - (-180)) + (-180);
       await page.setGeolocation({ latitude, longitude });
-      await page.waitForTimeout(100); // Wait for 1 second before changing location
+      await page.waitForTimeout(1000); // Wait for 1 second before changing location
     }
 
     await page.waitForTimeout(10000);//TODO:need wait for data que, check in real world
